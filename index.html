@@ -22,15 +22,29 @@
     <script>
         function generateImage() {
             const name = document.getElementById('nameInput').value.trim();
-            if (!name) { alert("يرجى إدخال الاسم!"); return; }
+            if (!name) { 
+                alert("يرجى إدخال الاسم!"); 
+                return; 
+            }
 
+            console.log("تم إدخال الاسم: " + name); // لتتبع القيمة المدخلة
+            
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
             // إضافة الصورة كخلفية
             const backgroundImg = new Image();
             backgroundImg.src = 'https://drive.google.com/uc?export=view&id=1JIk7pMINE9l6GAorspsX2PNQswfEX4HV'; // الرابط المباشر للصورة
+
+            // التعامل مع الخطأ عند عدم تحميل الصورة
+            backgroundImg.onerror = function() {
+                alert("فشل تحميل الصورة! تأكد من صحة الرابط.");
+                console.error("فشل تحميل الصورة");
+            };
+
+            // تأكيد تحميل الصورة بشكل صحيح
             backgroundImg.onload = function() {
+                console.log("تم تحميل الصورة بنجاح.");
                 ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
 
                 // نص "أنا هناك"
@@ -46,6 +60,7 @@
                 const img = new Image();
                 img.src = canvas.toDataURL();
                 img.onload = function() {
+                    console.log("تم تحويل الـcanvas إلى صورة.");
                     document.getElementById('preview').innerHTML = "";
                     document.getElementById('preview').appendChild(img);
 

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنا هنا</title>
+    <title>أنا هناك</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; direction: rtl; }
-        #preview img { margin-top: 20px; width: 100%; max-width: 400px; }
-        input { padding: 10px; margin: 10px; font-size: 18px; }
+        #preview img { margin-top: 20px; width: 100%; max-width: 600px; }
+        input { padding: 10px; margin: 10px; font-size: 18px; width: 250px; text-align: center; }
         button { padding: 10px 20px; font-size: 18px; cursor: pointer; }
     </style>
 </head>
@@ -16,7 +16,7 @@
     <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
     <button onclick="generateImage()">إنشاء الصورة</button>
     <br><br>
-    <canvas id="canvas" width="600" height="400" style="display:none;"></canvas>
+    <canvas id="canvas" width="1000" height="560" style="display:none;"></canvas>
     <div id="preview"></div>
 
     <script>
@@ -27,40 +27,28 @@
                 return; 
             }
 
-            console.log("تم إدخال الاسم: " + name); // لتتبع القيمة المدخلة
-            
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
             // إضافة الصورة كخلفية
             const backgroundImg = new Image();
-            backgroundImg.src = 'https://drive.google.com/uc?export=view&id=1JIk7pMINE9l6GAorspsX2PNQswfEX4HV'; // الرابط المباشر للصورة
+            backgroundImg.src = "67BF7C19-3996-4A7C-8890-642EA49F7419.png"; // اسم الصورة المرفوعة في نفس المجلد
 
-            // التعامل مع الخطأ عند عدم تحميل الصورة
-            backgroundImg.onerror = function() {
-                alert("فشل تحميل الصورة! تأكد من صحة الرابط.");
-                console.error("فشل تحميل الصورة");
-            };
-
-            // تأكيد تحميل الصورة بشكل صحيح
             backgroundImg.onload = function() {
-                console.log("تم تحميل الصورة بنجاح.");
                 ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
 
-                // نص "أنا هناك"
-                ctx.fillStyle = "#000";
-                ctx.font = "bold 40px Arial";
-                ctx.fillText("أنا هناك", 220, 50);
+                // إعداد تنسيق النص
+                ctx.fillStyle = "#4D4D4D"; // اللون الرمادي الغامق
+                ctx.font = "bold 50px Arial";
+                ctx.textAlign = "center";
 
-                // إضافة اسم المستخدم
-                ctx.font = "30px Arial";
-                ctx.fillText(name, 250, 200);
+                // تحديد موضع الاسم أعلى كلمة "أنا_هناك"
+                ctx.fillText(name, canvas.width / 2, 180);
 
                 // تحويل إلى صورة
                 const img = new Image();
                 img.src = canvas.toDataURL();
                 img.onload = function() {
-                    console.log("تم تحويل الـcanvas إلى صورة.");
                     document.getElementById('preview').innerHTML = "";
                     document.getElementById('preview').appendChild(img);
 
